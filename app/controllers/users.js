@@ -10,6 +10,42 @@ const emailer = require('../middleware/emailer')
  *********************/
 
 /**
+ * Gets all items from database
+ */
+const getAllItemsFromDB = async () => {
+  return new Promise((resolve, reject) => {
+    model.find(
+      {},
+      '-updatedAt -createdAt',
+      {
+        sort: {
+          name: 1
+        }
+      },
+      (err, items) => {
+        if (err) {
+          reject(utils.buildErrObject(422, err.message))
+        }
+        resolve(items)
+      }
+    )
+  })
+}
+
+/**
+ * Get all items function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.getAllItems = async (req, res) => {
+  try {
+    res.status(200).json(await getAllItemsFromDB())
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
  * Creates a new item in database
  * @param {Object} req - request object
  */

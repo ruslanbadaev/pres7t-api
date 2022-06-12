@@ -5,6 +5,8 @@ const EventSchema = new mongoose.Schema(
   {
     type: {
       type: String,
+      enum: ['tourist', 'politic', 'extravert', 'nurd'],
+      default: 'tourist',
       required: true
     },
     title: {
@@ -28,7 +30,7 @@ const EventSchema = new mongoose.Schema(
       required: true
     },
     date: {
-      type: Number,
+      type: String,
       required: true
     },
     images: {
