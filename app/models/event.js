@@ -3,24 +3,44 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const EventSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true
-    },
     type: {
       type: String,
       required: true
     },
-    creator: {
+    title: {
       type: String,
       required: true
     },
-    coordinates: {
-      x: {
+    creatorId: {
+      type: String,
+      required: true
+    },
+    aboutEvent: {
+      type: String,
+      required: true
+    },
+    aboutYou: {
+      type: String,
+      required: true
+    },
+    visitors: {
+      type: Number,
+      required: true
+    },
+    date: {
+      type: Number,
+      required: true
+    },
+    images: {
+      type: Array,
+      required: true
+    },
+    location: {
+      lat: {
         type: Number,
         required: true
       },
-      y: {
+      lng: {
         type: Number,
         required: true
       }
