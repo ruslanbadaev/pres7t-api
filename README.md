@@ -1,7 +1,4 @@
-# belcontrol-api
-
-#REST API for town app
-
+# pres7t-api
 
 download modules
 ```
@@ -19,4 +16,3 @@ nano .env
 ```
 
 
-# pres7t-api
