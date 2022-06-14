@@ -46,6 +46,17 @@ router.post(
  * Get item route
  */
 router.get(
+  '/position',
+  requireAuth,
+  AuthController.roleAuthorization(['admin', 'user']),
+  trimRequest.all,
+  controller.getItemsByPosition
+)
+
+/*
+ * Get item route
+ */
+router.get(
   '/:id',
   requireAuth,
   AuthController.roleAuthorization(['admin', 'user']),

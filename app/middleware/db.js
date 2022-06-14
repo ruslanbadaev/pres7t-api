@@ -91,6 +91,23 @@ module.exports = {
    * @param {Object} req - request object
    * @param {Object} query - query object
    */
+  async getItemByParams(params, model) {
+    return new Promise((resolve, reject) => {
+      model
+        .find(params, (err, item) => {
+          itemNotFound(err, item, reject, 'NOT_FOUND')
+          // resolve([])
+          resolve(item)
+        })
+        .lean(true)
+    })
+  },
+
+  /**
+   * Gets items from database
+   * @param {Object} req - request object
+   * @param {Object} query - query object
+   */
   async getItems(req, model, query) {
     const options = await listInitOptions(req)
     return new Promise((resolve, reject) => {

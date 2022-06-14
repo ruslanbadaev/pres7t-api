@@ -2,6 +2,7 @@ const model = require('../models/event')
 const { matchedData } = require('express-validator/filter')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
+const { assert } = require('chai')
 
 /*********************
  * Private functions *
@@ -56,6 +57,37 @@ exports.getItems = async (req, res) => {
   try {
     const query = await db.checkQueryString(req.query)
     res.status(200).json(await db.getItems(req, model, query))
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
+ * Get items function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.getItemsByPosition = async (req, res) => {
+  try {
+    console.log(req.body.lat === undefined || req.body.lng === undefined)
+    if (req.body.lat === undefined || req.body.lng === undefined) {
+      utils.handleError(res, { code: 422, message: 'LOCATION_NOT_FOUND' })
+    }
+    res.status(200).json(
+      await db.getItemByParams(
+        {
+          $and: [
+            {
+              'location.lat': { $gte: req.body.lat - 1, $lte: req.body.lat + 1 }
+            },
+            {
+              'location.lng': { $gte: req.body.lng - 1, $lte: req.body.lng + 1 }
+            }
+          ]
+        },
+        model
+      )
+    )
   } catch (error) {
     utils.handleError(res, error)
   }
