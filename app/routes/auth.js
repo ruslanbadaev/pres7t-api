@@ -27,7 +27,7 @@ router.post(
 /*
  * Verify route
  */
-router.post('/verify', trimRequest.all, validate.verify, controller.verify)
+router.get('/verify', trimRequest.all, validate.verify, controller.verify)
 
 /*
  * Forgot password route

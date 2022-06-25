@@ -26,7 +26,7 @@ const EventSchema = new mongoose.Schema(
       required: true
     },
     visitors: {
-      type: Number,
+      type: Array,
       required: true
     },
     date: {
@@ -54,4 +54,5 @@ const EventSchema = new mongoose.Schema(
   }
 )
 EventSchema.plugin(mongoosePaginate)
+
 module.exports = mongoose.model('Event', EventSchema)

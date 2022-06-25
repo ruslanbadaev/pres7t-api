@@ -38,6 +38,7 @@ const listInitOptions = async req => {
     const options = {
       sort: sortBy,
       lean: true,
+      projection: req.projection,
       page,
       limit
     }
@@ -91,15 +92,32 @@ module.exports = {
    * @param {Object} req - request object
    * @param {Object} query - query object
    */
-  async getItemByParams(params, model) {
+  async getItemByParams(params, property, model) {
     return new Promise((resolve, reject) => {
       model
-        .find(params, (err, item) => {
+        .find(params, property, (err, item) => {
           itemNotFound(err, item, reject, 'NOT_FOUND')
           // resolve([])
           resolve(item)
         })
         .lean(true)
+    })
+  },
+
+  /**
+   * Gets items from database
+   * @param {Object} req - request object
+   * @param {Object} query - query object
+   */
+  async getItemByParamsAndPaginate(req, model, query) {
+    const options = await listInitOptions(req)
+    return new Promise((resolve, reject) => {
+      model.paginate(query, options, (err, items) => {
+        if (err) {
+          reject(buildErrObject(422, err.message))
+        }
+        resolve(cleanPaginationID(items))
+      })
     })
   },
 

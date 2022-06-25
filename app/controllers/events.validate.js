@@ -45,9 +45,6 @@ exports.createItem = [
   check('visitors')
     .exists()
     .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
     .trim(),
   check('date')
     .exists()
@@ -114,11 +111,7 @@ exports.updateItem = [
     .trim(),
   check('visitors')
     .exists()
-    .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
+    .withMessage('MISSING'),
   check('date')
     .exists()
     .withMessage('MISSING')

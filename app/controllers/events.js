@@ -2,7 +2,6 @@ const model = require('../models/event')
 const { matchedData } = require('express-validator/filter')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
-const { assert } = require('chai')
 
 /*********************
  * Private functions *
@@ -73,20 +72,55 @@ exports.getItemsByPosition = async (req, res) => {
     if (req.body.lat === undefined || req.body.lng === undefined) {
       utils.handleError(res, { code: 422, message: 'LOCATION_NOT_FOUND' })
     }
+    req.projection = { _id: 1, type: 1, title: 1 }
     res.status(200).json(
-      await db.getItemByParams(
-        {
-          $and: [
-            {
-              'location.lat': { $gte: req.body.lat - 1, $lte: req.body.lat + 1 }
-            },
-            {
-              'location.lng': { $gte: req.body.lng - 1, $lte: req.body.lng + 1 }
+      await db.getItemByParams(req, model, {
+        $and: [
+          {
+            'location.lat': {
+              $gte: req.body.lat - 1,
+              $lte: req.body.lat + 1
             }
-          ]
-        },
-        model
-      )
+          },
+          {
+            'location.lng': {
+              $gte: req.body.lng - 1,
+              $lte: req.body.lng + 1
+            }
+          }
+        ]
+      })
+    )
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
+ * Get items function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.getItemsByStatus = async (req, res) => {
+  try {
+    req.projection = { _id: 1, type: 1, title: 1 }
+    res.status(200).json(
+      await db.getItemByParamsAndPaginate(req, model, {
+        $and: [
+          {
+            'location.lat': {
+              $gte: req.body.lat - 1,
+              $lte: req.body.lat + 1
+            }
+          },
+          {
+            'location.lng': {
+              $gte: req.body.lng - 1,
+              $lte: req.body.lng + 1
+            }
+          }
+        ]
+      })
     )
   } catch (error) {
     utils.handleError(res, error)

@@ -24,8 +24,8 @@ router.get('/all', controller.getAllItems)
  */
 router.get(
   '/',
-  requireAuth,
-  AuthController.roleAuthorization(['admin', 'user']),
+  // requireAuth,
+  // AuthController.roleAuthorization(['admin', 'user']),
   trimRequest.all,
   controller.getItems
 )
