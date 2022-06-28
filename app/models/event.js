@@ -25,6 +25,10 @@ const EventSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    aboutLocation: {
+      type: String,
+      required: true
+    },
     visitors: {
       type: Array,
       required: true

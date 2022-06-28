@@ -21,13 +21,6 @@ exports.createItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(),
-  check('creatorId')
-    .exists()
-    .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
   check('aboutEvent')
     .exists()
     .withMessage('MISSING')
@@ -36,6 +29,13 @@ exports.createItem = [
     .withMessage('IS_EMPTY')
     .trim(),
   check('aboutYou')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('aboutLocation')
     .exists()
     .withMessage('MISSING')
     .not()
@@ -88,13 +88,6 @@ exports.updateItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(),
-  check('creatorId')
-    .exists()
-    .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
   check('aboutEvent')
     .exists()
     .withMessage('MISSING')
@@ -103,6 +96,13 @@ exports.updateItem = [
     .withMessage('IS_EMPTY')
     .trim(),
   check('aboutYou')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('aboutLocation')
     .exists()
     .withMessage('MISSING')
     .not()

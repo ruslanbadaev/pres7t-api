@@ -32,6 +32,12 @@ const UserSchema = new mongoose.Schema(
     verification: {
       type: String
     },
+    description: {
+      type: String
+    },
+    friends: {
+      type: String
+    },
     verified: {
       type: Boolean,
       default: false

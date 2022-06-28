@@ -2,7 +2,7 @@ const model = require('../models/event')
 const { matchedData } = require('express-validator/filter')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
-
+require('../../config/passport')
 /*********************
  * Private functions *
  *********************/
@@ -164,7 +164,11 @@ exports.updateItem = async (req, res) => {
  */
 exports.createItem = async (req, res) => {
   try {
+    // console.log(jwtExtractor(req))
+    console.log(req.user)
+    const userId = req.user._id
     req = matchedData(req)
+    req.creatorId = userId
     res.status(201).json(await db.createItem(req, model))
   } catch (error) {
     utils.handleError(res, error)

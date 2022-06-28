@@ -260,7 +260,7 @@ const verificationExists = async id => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
-        verification: id,
+        g: id,
         verified: false
       },
       (err, user) => {
