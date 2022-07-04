@@ -25,7 +25,7 @@ router.get('/all', controller.getAllItems)
 router.get(
   '/',
   // requireAuth,
-  // AuthController.roleAuthorization(['admin', 'user']),
+  // AuthController.roleAuthorization(['admin']),
   trimRequest.all,
   controller.getItems
 )
@@ -47,8 +47,8 @@ router.post(
  */
 router.get(
   '/position',
-  requireAuth,
-  AuthController.roleAuthorization(['admin', 'user']),
+  // requireAuth,
+  // AuthController.roleAuthorization(['admin', 'user']),
   trimRequest.all,
   controller.getItemsByPosition
 )

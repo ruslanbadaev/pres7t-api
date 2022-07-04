@@ -68,29 +68,40 @@ exports.getItems = async (req, res) => {
  */
 exports.getItemsByPosition = async (req, res) => {
   try {
-    console.log(req.body.lat === undefined || req.body.lng === undefined)
-    if (req.body.lat === undefined || req.body.lng === undefined) {
+    console.log(req.query)
+    console.log(req.body)
+    req = utils.checkDataContained(req)
+
+    console.log(req)
+
+    console.log(req.lat === undefined || req.lng === undefined)
+    if (req.lat === undefined || req.lng === undefined) {
       utils.handleError(res, { code: 422, message: 'LOCATION_NOT_FOUND' })
     }
-    req.projection = { _id: 1, type: 1, title: 1 }
-    res.status(200).json(
-      await db.getItemByParams(req, model, {
-        $and: [
-          {
-            'location.lat': {
-              $gte: req.body.lat - 1,
-              $lte: req.body.lat + 1
+
+    res.status(200).json({
+      docs: await db.getItemByParams(
+        {
+          $and: [
+            {
+              'location.lat': {
+                $gte: req.lat - 1,
+                $lte: req.lat + 1
+              }
+            },
+            {
+              'location.lng': {
+                $gte: req.lng - 1,
+                $lte: req.lng + 1
+              }
             }
-          },
-          {
-            'location.lng': {
-              $gte: req.body.lng - 1,
-              $lte: req.body.lng + 1
-            }
-          }
-        ]
-      })
-    )
+          ]
+        },
+        { _id: 1, type: 1, title: 1, location: 1 },
+
+        model
+      )
+    })
   } catch (error) {
     utils.handleError(res, error)
   }

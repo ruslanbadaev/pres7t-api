@@ -50,6 +50,11 @@ exports.handleError = (res, err) => {
   })
 }
 
+exports.jsonIsEmpty = obj => Object.keys(obj).length === 0
+
+exports.checkDataContained = req =>
+  this.jsonIsEmpty(req.body) ? req.query : req.body
+
 /**
  * Builds error object
  * @param {number} code - error code
